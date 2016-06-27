@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://bm_army.fnt" type="Font" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="level_text" type="Label" parent="."]
+
+margin/right = 53.0
+margin/bottom = 14.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.960938, 0.0600586, 0.0600586, 1 )
+custom_colors/font_color_shadow = Color( 0.181152, 0.206425, 0.828125, 1 )
+text = "Level 1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+

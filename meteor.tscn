@@ -1,0 +1,122 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://meteor.gd" type="Script" id=1]
+[ext_resource path="res://meteor.png" type="Texture" id=2]
+[ext_resource path="res://icecube.png" type="Texture" id=3]
+[ext_resource path="res://explosion_small.wav" type="Sample" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -3.69424, 0.950956, 0.191439, -3.62411, 2.69833, -2.43334, 2.69833, 3.52052, -0.623299, 3.64586 )
+
+[sub_resource type="ColorRamp" id=2]
+
+offsets = FloatArray( 0, 0.988304 )
+colors = ColorArray( 1, 0.140625, 0, 1, 1, 0.539062, 0, 0 )
+
+[sub_resource type="ColorRamp" id=3]
+
+offsets = FloatArray( 0, 1 )
+colors = ColorArray( 1, 0, 0, 1, 1, 1, 1, 0 )
+
+[sub_resource type="SampleLibrary" id=4]
+
+samples/explosion_small = { "db":0.0, "pitch":1.0, "sample":ExtResource( 4 ) }
+
+[node name="node" type="Node2D"]
+
+[node name="meteor" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+direction = Vector2( 0, 60 )
+
+[node name="particles" type="Particles2D" parent="meteor"]
+
+config/amount = 32
+config/lifetime = 0.987789
+config/half_extents = Vector2( 3, 3 )
+params/direction = 180.0
+params/spread = 0.0
+params/linear_velocity = 164.997
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 2.5
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 1, 0.199219, 0.199219, 1 )
+color/color_ramp = SubResource( 2 )
+
+[node name="sprite" type="Sprite" parent="meteor"]
+
+texture = ExtResource( 2 )
+
+[node name="collision" type="CollisionPolygon2D" parent="meteor"]
+
+build_mode = 0
+polygon = Vector2Array( -3.69424, 0.950956, 0.191439, -3.62411, 2.69833, -2.43334, 2.69833, 3.52052, -0.623299, 3.64586 )
+shape_range = Vector2( 0, 0 )
+trigger = false
+
+[node name="visibility_notifier" type="VisibilityNotifier2D" parent="meteor"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[node name="explosion" type="Particles2D" parent="meteor"]
+
+config/amount = 32
+config/lifetime = 0.5
+config/emit_timeout = 0.5
+config/emitting = false
+config/explosiveness = 0.31
+config/texture = ExtResource( 3 )
+params/direction = 0.0
+params/spread = 180.0
+params/linear_velocity = 20.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 0.5
+params/final_size = 0.5
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color_ramp = SubResource( 3 )
+
+[node name="sfx" type="SamplePlayer2D" parent="meteor"]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 4 )
+config/pitch_random = 0.0
+
+[connection signal="enter_screen" from="meteor/visibility_notifier" to="meteor" method="_on_visibility_enter_screen"]
+
+[connection signal="exit_screen" from="meteor/visibility_notifier" to="meteor" method="_on_visibility_exit_screen"]
+
+
